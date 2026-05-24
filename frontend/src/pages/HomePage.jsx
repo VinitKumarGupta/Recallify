@@ -47,7 +47,7 @@ const HomePage = () => {
                     </div>
                 )}
 
-                {notes.length === 0 && !isRateLimited && !setLoading && (
+                {notes.length === 0 && !isRateLimited && !loading && (
                     <NotesNotFound />
                 )}
 
