@@ -1,16 +1,96 @@
-# React + Vite
+# Recallify
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small MERN stack notes application (React + Vite frontend, Express + MongoDB backend) with basic CRUD and a clean UI.
 
-Currently, two official plugins are available:
+Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Create, read, update and delete notes
+- Simple REST API under `/api/notes`
+- Vite-powered React frontend with hot-reload
 
-## React Compiler
+Tech stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Frontend: React, Vite, Tailwind CSS, DaisyUI, react-hot-toast
+- Backend: Node.js, Express, Mongoose (MongoDB)
+- Rate limiting: Upstash Redis via @upstash/ratelimit
 
-## Expanding the ESLint configuration
+Prerequisites
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node.js 18+ and npm
+- A MongoDB connection string (MongoDB Atlas or local)
+
+Repository layout
+
+- `backend/` — Express API and database code
+- `frontend/` — Vite + React web app
+
+Quick start (development)
+
+1. Clone the repo and install dependencies for both projects:
+
+```powershell
+# in repo root
+cd backend
+npm install
+
+cd ../frontend
+npm install
+```
+
+2. Run backend and frontend concurrently in development:
+
+```powershell
+# terminal 1
+cd backend
+npm run dev
+
+# terminal 2
+cd frontend
+npm run dev
+```
+
+The frontend dev server runs by default at `http://localhost:5173` and the backend API at `http://localhost:5001` (see `backend/src/server.js`). The frontend Axios client targets `/api` in production and `http://localhost:5001/api` in development.
+
+Environment variables (backend)
+Create a `.env` file in `backend/` with at least:
+
+```
+MONGO_URI=your_mongodb_connection_string
+PORT=5001
+NODE_ENV=development
+# Optional (for Upstash Redis)
+UPSTASH_REDIS_REST_URL=...
+UPSTASH_REDIS_REST_TOKEN=...
+```
+
+Production (root scripts)
+
+The repository includes root-level helper scripts that install dependencies and build the frontend, then start the backend which serves the built app in production.
+
+From the repository root run:
+
+```powershell
+# install deps and build frontend
+npm run build
+
+# start the backend (it will serve the frontend when NODE_ENV=production)
+npm run start
+```
+
+API endpoints
+
+- `GET /api/notes` — list notes
+- `GET /api/notes/:id` — get a single note
+- `POST /api/notes` — create a note (body: `{ title, content }`)
+- `PUT /api/notes/:id` — update a note (body: `{ title, content }`)
+- `DELETE /api/notes/:id` — delete a note
+
+Contributing
+
+- Feel free to open issues or PRs. Suggested improvements: add authentication, pagination, filtering, or tests.
+
+License
+
+- MIT (feel free to change)
+
+Enjoy! — small, focused app for taking notes quickly.
